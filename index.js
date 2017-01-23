@@ -117,7 +117,7 @@ var FloatingLabel  = React.createClass({
         editable: this.props.editable,
         enablesReturnKeyAutomatically: this.props.enablesReturnKeyAutomatically,
         keyboardType: this.props.keyboardType,
-        maskPattern: this.props.maskPattern,
+        options: this.props.maskPattern, // maskPattern
         multiline: this.props.multiline,
         onBlur: this._onBlur,
         onChange: this.props.onChange,
@@ -131,7 +131,7 @@ var FloatingLabel  = React.createClass({
         selectionState: this.props.selectionState,
         style: [styles.input],
         testID: this.props.testID,
-        typeMask: this.props.typeMask,
+        type: this.props.typeMask, // typeMask
         value: this.props.value,
         underlineColorAndroid: this.props.underlineColorAndroid // android TextInput will show the default bottom border
       },
