@@ -1,5 +1,5 @@
 'use strict';
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import {
   StyleSheet,
@@ -11,6 +11,8 @@ import {
   View,
   Platform
 } from 'react-native';
+
+import { TextInputMask } from 'react-native-masked-text';
 
 var textPropTypes = Text.propTypes || View.propTypes
 var textInputPropTypes = TextInput.propTypes || textPropTypes
@@ -115,6 +117,7 @@ var FloatingLabel  = React.createClass({
         editable: this.props.editable,
         enablesReturnKeyAutomatically: this.props.enablesReturnKeyAutomatically,
         keyboardType: this.props.keyboardType,
+        maskPattern: this.props.maskPattern,
         multiline: this.props.multiline,
         onBlur: this._onBlur,
         onChange: this.props.onChange,
@@ -122,12 +125,13 @@ var FloatingLabel  = React.createClass({
         onEndEditing: this.updateText,
         onFocus: this._onFocus,
         onSubmitEditing: this.props.onSubmitEditing,
-        secureTextEntry: this.props.secureTextEntry,
         returnKeyType: this.props.returnKeyType,
+        secureTextEntry: this.props.secureTextEntry,
         selectTextOnFocus: this.props.selectTextOnFocus,
         selectionState: this.props.selectionState,
         style: [styles.input],
         testID: this.props.testID,
+        typeMask: this.props.typeMask,
         value: this.props.value,
         underlineColorAndroid: this.props.underlineColorAndroid // android TextInput will show the default bottom border
       },
@@ -141,6 +145,16 @@ var FloatingLabel  = React.createClass({
       elementStyles.push(this.props.style);
     }
 
+    if (this.props.maskPattern) {
+      return (
+        <View style={elementStyles}>
+          {this._renderLabel()}
+          <TextInputMask
+            {...props}
+          />
+        </View>
+      );
+    }
     return (
   		<View style={elementStyles}>
         {this._renderLabel()}

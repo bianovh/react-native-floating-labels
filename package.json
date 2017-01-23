@@ -14,7 +14,8 @@
     "ios"
   ],
   "dependencies": {
-    "lodash": "^3.8.0"
+    "lodash": "^3.8.0",
+    "react-native-masked-text": "^1.2.1"
   },
   "scripts": {
     "test": "echo 'Success'"
