@@ -76,6 +76,13 @@ var FloatingLabel  = React.createClass({
     }
   },
 
+  _setFocus () {
+    if (!this.props.setFocus) {
+      return
+    }
+    this.textInput.focus()
+  }
+
   onChangeText(text) {
     this.setState({ text })
     if (this.props.onChangeText) {
@@ -144,6 +151,7 @@ var FloatingLabel  = React.createClass({
   		<View style={elementStyles}>
         {this._renderLabel()}
         <TextInput
+          ref={(c) => {this.textInput = c}}
           {...props}
         >
         </TextInput>
