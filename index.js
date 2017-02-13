@@ -44,7 +44,14 @@ var FloatingLabel  = React.createClass({
     if (this.props.setFocus) {
       this.textInput.focus()
     }
-  }
+  },
+
+  onChangeText(text) {
+    this.setState({ text })
+    if (this.props.onChangeText) {
+      this.props.onChangeText(text)
+    }
+  },
 
   _animate(dirty) {
     var nextStyle = dirty ? dirtyStyle : cleanStyle
@@ -82,12 +89,7 @@ var FloatingLabel  = React.createClass({
     }
   },
 
-  onChangeText(text) {
-    this.setState({ text })
-    if (this.props.onChangeText) {
-      this.props.onChangeText(text)
-    }
-  },
+
 
   updateText(event) {
     var text = event.nativeEvent.text
