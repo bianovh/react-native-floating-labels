@@ -45,7 +45,11 @@ var FloatingLabel  = React.createClass({
       this.textInput.focus()
     }
   },
-
+  componentWillReceiveProps(newProps) {
+    if (this.props.setFocus !== newProps.setFocus) {
+      this.textInput.focus()
+    }
+  },
   onChangeText(text) {
     this.setState({ text })
     if (this.props.onChangeText) {
