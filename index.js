@@ -46,7 +46,7 @@ var FloatingLabel  = React.createClass({
     }
   },
   componentWillReceiveProps(newProps) {
-    if (this.props.setFocus !== newProps.setFocus) {
+    if (this.props.setFocus !== newProps.setFocus && newProps.setFocus) {
       this.textInput.focus()
     }
   },
@@ -138,10 +138,11 @@ var FloatingLabel  = React.createClass({
         secureTextEntry: this.props.secureTextEntry,
         selectTextOnFocus: this.props.selectTextOnFocus,
         selectionState: this.props.selectionState,
+        selection: this.props.selection,
         style: [styles.input],
         testID: this.props.testID,
         value: this.props.value,
-        underlineColorAndroid: this.props.underlineColorAndroid // android TextInput will show the default bottom border
+        underlineColorAndroid: this.props.underlineColorAndroid, // android TextInput will show the default bottom border
       },
       elementStyles = [styles.element];
 
