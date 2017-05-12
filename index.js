@@ -143,6 +143,7 @@ var FloatingLabel  = React.createClass({
         testID: this.props.testID,
         value: this.props.value,
         underlineColorAndroid: this.props.underlineColorAndroid, // android TextInput will show the default bottom border
+        textAlignVertical: this.props.textAlignVertical,
       },
       elementStyles = [styles.element];
 
