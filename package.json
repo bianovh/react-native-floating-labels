@@ -20,5 +20,8 @@
     "test": "echo 'Success'"
   },
   "author": "Mayank Patel",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prop-types": "^15.6.0"
+  }
 }
