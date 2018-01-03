@@ -13,8 +13,8 @@ import {
   Platform
 } from 'react-native';
 
-var textPropTypes = Text.propTypes || View.propTypes
-var textInputPropTypes = TextInput.propTypes || textPropTypes
+var textPropTypes = Text.propTypes && View.propTypes
+var textInputPropTypes = TextInput.propTypes && textPropTypes
 var propTypes = {
   ...textInputPropTypes,
   inputStyle: textInputPropTypes.style,
@@ -23,40 +23,46 @@ var propTypes = {
   style: View.propTypes.style,
 }
 
-var FloatingLabel  = React.createClass({
-  propTypes: propTypes,
+class FloatingLabel extends Component {
 
-  getInitialState () {
-    var state = {
+  constructor(props) {
+    super(props)
+    this.state = {
       text: this.props.value,
       dirty: !!this.props.value
-    };
+    }
 
-    var style = state.dirty ? dirtyStyle : cleanStyle
-    state.labelStyle = {
+    var style = this.state.dirty ? dirtyStyle : cleanStyle
+    this.state.labelStyle = {
       fontSize: new Animated.Value(style.fontSize),
       top: new Animated.Value(style.top)
     }
 
-    return state
-  },
+    this.onChangeText = this.onChangeText.bind(this)
+    this._animate = this._animate.bind(this)
+    this._onFocus = this._onFocus.bind(this)
+    this._onBlur = this._onBlur.bind(this)
+    this.updateText = this.updateText.bind(this)
+    this._renderLabel = this._renderLabel.bind(this)
+  }
 
   componentDidMount() {
     if (this.props.setFocus) {
       this.textInput.focus()
     }
-  },
+  }
   componentWillReceiveProps(newProps) {
-    if (this.props.setFocus !== newProps.setFocus && newProps.setFocus) {
-      this.textInput.focus()
+    if (typeof this.props.value !== 'undefined' && this.props.value !== this.state.text) {
+      this.setState({ text: this.props.value, dirty: !!this.props.value })
+      this._animate(!!this.props.value)
     }
-  },
+  }
   onChangeText(text) {
     this.setState({ text })
     if (this.props.onChangeText) {
       this.props.onChangeText(text)
     }
-  },
+  }
 
   _animate(dirty) {
     var nextStyle = dirty ? dirtyStyle : cleanStyle
@@ -73,7 +79,7 @@ var FloatingLabel  = React.createClass({
     })
 
     Animated.parallel(anims).start()
-  },
+  }
 
   _onFocus () {
     this._animate(true)
@@ -81,7 +87,7 @@ var FloatingLabel  = React.createClass({
     if (this.props.onFocus) {
       this.props.onFocus(arguments);
     }
-  },
+  }
 
   _onBlur () {
     if (!this.state.text) {
@@ -92,7 +98,7 @@ var FloatingLabel  = React.createClass({
     if (this.props.onBlur) {
       this.props.onBlur(arguments);
     }
-  },
+  }
 
 
 
@@ -103,18 +109,19 @@ var FloatingLabel  = React.createClass({
     if (this.props.onEndEditing) {
       this.props.onEndEditing(event)
     }
-  },
+  }
 
   _renderLabel () {
     return (
       <Animated.Text
         ref='label'
+        numberOfLines={this.props.numberOfLines}
         style={[this.state.labelStyle, styles.label, this.props.labelStyle]}
       >
         {this.props.children}
       </Animated.Text>
     )
-  },
+  }
 
   render() {
     var props = {
@@ -128,7 +135,9 @@ var FloatingLabel  = React.createClass({
         editable: this.props.editable,
         enablesReturnKeyAutomatically: this.props.enablesReturnKeyAutomatically,
         keyboardType: this.props.keyboardType,
+        maxHeight: this.props.maxHeight,
         multiline: this.props.multiline,
+        numberOflines: this.props.numberOflines,
         onBlur: this._onBlur,
         onChange: this.props.onChange,
         onChangeText: this.onChangeText,
@@ -156,6 +165,7 @@ var FloatingLabel  = React.createClass({
     if (this.props.style) {
       elementStyles.push(this.props.style);
     }
+
     return (
   		<View style={elementStyles}>
         {this._renderLabel()}
@@ -166,8 +176,8 @@ var FloatingLabel  = React.createClass({
         </TextInput>
       </View>
     );
-  },
-});
+  }
+}
 
 var labelStyleObj = {
   marginTop: 21,
@@ -185,17 +195,18 @@ var styles = StyleSheet.create({
     position: 'relative'
   },
   input: {
-    height: 40,
+    // height: 40,
     borderColor: 'gray',
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    borderWidth: 1,
+    // borderWidth: 1,
     color: 'black',
     fontSize: 18,
     borderRadius: 4,
     marginLeft: Platform.OS === 'android' ? -5 : 0,
     // paddingLeft: 10,
     marginTop: 20,
+    textAlignVertical: 'top',
   },
   label: labelStyleObj
 })
