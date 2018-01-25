@@ -10,17 +10,19 @@ import {
   Easing,
   Text,
   View,
-  Platform
+  Platform,
+  ViewProptypes
 } from 'react-native';
 
-var textPropTypes = Text.propTypes && View.propTypes
+var viewProptypes = ViewProptypes || View.PropTypes
+var textPropTypes = Text.propTypes && viewProptypes
 var textInputPropTypes = TextInput.propTypes && textPropTypes
 var propTypes = {
   ...textInputPropTypes,
   inputStyle: textInputPropTypes.style,
   labelStyle: textPropTypes.style,
   disabled: PropTypes.bool,
-  style: View.propTypes.style,
+  style: viewProptypes.style,
 }
 
 class FloatingLabel extends Component {
