@@ -14,7 +14,7 @@ import {
   ViewPropTypes
 } from 'react-native';
 
-var viewProptypes = ViewProptypes || View.PropTypes
+var viewProptypes = ViewPropTypes || View.PropTypes
 var textPropTypes = Text.propTypes && viewProptypes
 var textInputPropTypes = TextInput.propTypes && textPropTypes
 var propTypes = {
