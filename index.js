@@ -54,9 +54,9 @@ class FloatingLabel extends Component {
     }
   }
   componentWillReceiveProps(newProps) {
-    if (typeof this.props.value !== 'undefined' && this.props.value !== this.state.text) {
-      this.setState({ text: this.props.value, dirty: !!this.props.value })
-      this._animate(!!this.props.value)
+    if (typeof this.props.value !== 'undefined' && newProps.value !== this.state.text) {
+      this.setState({ text: newProps.value, dirty: !!newProps.value })
+      this._animate(!!newProps.value)
     }
   }
   onChangeText(text) {
